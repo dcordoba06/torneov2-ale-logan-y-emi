@@ -5,6 +5,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.OBJETOS, function (sprite, other
     sprites.destroy(otherSprite, effects.disintegrate, 100)
     PLAYER.startEffect(effects.confetti, 200)
     info.changeScoreBy(1)
+    countPizzas += 1
+    actualizarMarcadores()
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     PLAYER.setImage(img`
@@ -60,6 +62,189 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f d d f d 1 f . . . . 
         . . . . . . f f . f d f . . . . 
         . . . . . . . . . . f f . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    150,
+    true
+    )
+})
+function actualizarMarcadores () {
+    txtPizzas.setText("Pizzas: " + countPizzas)
+}
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    PLAYER.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . . f d 1 1 1 1 1 f . . . 
+        . . . . f d 1 1 1 1 1 1 1 f . . 
+        . . . . f 1 f 1 1 1 1 1 1 f . . 
+        . . . . f 1 f 1 1 1 1 1 1 f . . 
+        . . . . f 1 1 1 1 1 1 1 1 f . . 
+        . . . . f 1 1 1 1 1 1 1 d f . . 
+        . . . . . f d 1 1 1 1 d f . . . 
+        . . . . . . f 1 1 1 1 f . . . . 
+        . . . . . . f 1 1 1 1 f . . . . 
+        . . . . . . f 1 1 1 d f . . . . 
+        . . . . . . f 1 d f d f . . . . 
+        . . . . . . f d f f d f . . . . 
+        . . . . . . f f . . f f . . . . 
+        `)
+    animation.runImageAnimation(
+    PLAYER,
+    [img`
+        . . . . . f f f f f f . . . . . 
+        . . . . f d 1 1 1 1 1 f . . . . 
+        . . . f d 1 1 1 1 1 1 1 f . . . 
+        . . . f 1 f 1 1 1 1 1 1 f . . . 
+        . . . f 1 f 1 1 1 1 1 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 d f . . . 
+        . . . . f d 1 1 1 1 d f . . . . 
+        . . . . . f 1 1 1 1 f . . . . . 
+        . . . . . f 1 1 1 d f . . . . . 
+        . . . . . f 1 1 d d f . . . . . 
+        . . . . . f d d f d f . . . . . 
+        . . . . . f d f f f . . . . . . 
+        . . . . . f f . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . f d 1 1 1 1 1 f . . . . 
+        . . . f d 1 1 1 1 1 1 1 f . . . 
+        . . . f 1 f 1 1 1 1 1 1 f . . . 
+        . . . f 1 f 1 1 1 1 1 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 d f . . . 
+        . . . . f d 1 1 1 1 d f . . . . 
+        . . . . . f 1 1 1 1 f . . . . . 
+        . . . . . f 1 1 1 d f . . . . . 
+        . . . . . f d d d d f . . . . . 
+        . . . . . . f d f d f . . . . . 
+        . . . . . . . f f d f . . . . . 
+        . . . . . . . . . f f . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    150,
+    true
+    )
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    PLAYER.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . f f f f f f . . . . . . 
+        . . . f 1 1 1 1 1 d f . . . . . 
+        . . f 1 1 1 1 1 1 1 d f . . . . 
+        . . f 1 1 1 1 1 1 f 1 f . . . . 
+        . . f 1 1 1 1 1 1 f 1 f . . . . 
+        . . f 1 1 1 1 1 1 1 1 f . . . . 
+        . . f 1 1 1 1 1 1 1 1 f . . . . 
+        . . . f d 1 1 1 1 d f . . . . . 
+        . . . . f 1 1 1 1 f . . . . . . 
+        . . . . f 1 1 1 1 f . . . . . . 
+        . . . . f d 1 1 1 f . . . . . . 
+        . . . . f d f d 1 f . . . . . . 
+        . . . . f d f f d f . . . . . . 
+        . . . . f f . . f f . . . . . . 
+        `)
+    animation.runImageAnimation(
+    PLAYER,
+    [img`
+        . . . . . f f f f f f . . . . . 
+        . . . . f 1 1 1 1 1 d f . . . . 
+        . . . f 1 1 1 1 1 1 1 d f . . . 
+        . . . f 1 1 1 1 1 1 f 1 f . . . 
+        . . . f 1 1 1 1 1 1 f 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 1 f . . . 
+        . . . f d 1 1 1 1 1 1 1 f . . . 
+        . . . . f d 1 1 1 1 d f . . . . 
+        . . . . . f 1 1 1 1 f . . . . . 
+        . . . . . f d 1 1 1 f . . . . . 
+        . . . . . f d d 1 1 f . . . . . 
+        . . . . . f d f d d f . . . . . 
+        . . . . . . f f f d f . . . . . 
+        . . . . . . . . . f f . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . f 1 1 1 1 1 d f . . . . 
+        . . . f 1 1 1 1 1 1 1 d f . . . 
+        . . . f 1 1 1 1 1 1 f 1 f . . . 
+        . . . f 1 1 1 1 1 1 f 1 f . . . 
+        . . . f 1 1 1 1 1 1 1 1 f . . . 
+        . . . f d 1 1 1 1 1 1 1 f . . . 
+        . . . . f d 1 1 1 1 d f . . . . 
+        . . . . . f 1 1 1 1 f . . . . . 
+        . . . . . f d 1 1 1 f . . . . . 
+        . . . . . f d d d d f . . . . . 
+        . . . . . f d f d f . . . . . . 
+        . . . . . f d f f . . . . . . . 
+        . . . . . f f . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    150,
+    true
+    )
+})
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    PLAYER.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . f d 1 1 1 1 1 d f . . . 
+        . . . f d 1 1 1 1 1 1 1 d f . . 
+        . . . f 1 1 f 1 1 1 f 1 1 f . . 
+        . . . f 1 1 f 1 1 1 f 1 1 f . . 
+        . . . f 1 1 1 1 1 1 1 1 1 f . . 
+        . . . f 1 1 1 1 1 1 1 1 1 f . . 
+        . . . . f d 1 1 1 1 1 d f . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 d f 1 1 f . . . . 
+        . . . . . f d f . f d f . . . . 
+        . . . . . f f . . f f f . . . . 
+        `)
+    animation.runImageAnimation(
+    PLAYER,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . f d 1 1 1 1 1 d f . . . 
+        . . . f d 1 1 1 1 1 1 1 d f . . 
+        . . . f 1 1 f 1 1 1 f 1 1 f . . 
+        . . . f 1 1 f 1 1 1 f 1 1 f . . 
+        . . . f 1 1 1 1 1 1 1 1 1 f . . 
+        . . . f 1 1 1 1 1 1 1 1 1 f . . 
+        . . . . f d 1 1 1 1 1 d f . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 1 1 1 1 f . . . . 
+        . . . . . f 1 f f 1 1 f . . . . 
+        . . . . . . f . . f d f . . . . 
+        . . . . . . . . . f f f . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . f f f f f f f . . . . . 
+        . . . f d 1 1 1 1 1 d f . . . . 
+        . . f d 1 1 1 1 1 1 1 d f . . . 
+        . . f 1 1 f 1 1 1 f 1 1 f . . . 
+        . . f 1 1 f 1 1 1 f 1 1 f . . . 
+        . . f 1 1 1 1 1 1 1 1 1 f . . . 
+        . . f 1 1 1 1 1 1 1 1 1 f . . . 
+        . . . f d 1 1 1 1 1 d f . . . . 
+        . . . . f 1 1 1 1 1 f . . . . . 
+        . . . . f 1 1 1 1 1 f . . . . . 
+        . . . . f 1 1 1 1 1 f . . . . . 
+        . . . . f 1 d f 1 1 f . . . . . 
+        . . . . f d f . f f . . . . . . 
+        . . . . f f . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `],
     150,
@@ -435,190 +620,14 @@ function Crear_Basura () {
     true
     )
 }
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    PLAYER.setImage(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . . f d 1 1 1 1 1 f . . . 
-        . . . . f d 1 1 1 1 1 1 1 f . . 
-        . . . . f 1 f 1 1 1 1 1 1 f . . 
-        . . . . f 1 f 1 1 1 1 1 1 f . . 
-        . . . . f 1 1 1 1 1 1 1 1 f . . 
-        . . . . f 1 1 1 1 1 1 1 d f . . 
-        . . . . . f d 1 1 1 1 d f . . . 
-        . . . . . . f 1 1 1 1 f . . . . 
-        . . . . . . f 1 1 1 1 f . . . . 
-        . . . . . . f 1 1 1 d f . . . . 
-        . . . . . . f 1 d f d f . . . . 
-        . . . . . . f d f f d f . . . . 
-        . . . . . . f f . . f f . . . . 
-        `)
-    animation.runImageAnimation(
-    PLAYER,
-    [img`
-        . . . . . f f f f f f . . . . . 
-        . . . . f d 1 1 1 1 1 f . . . . 
-        . . . f d 1 1 1 1 1 1 1 f . . . 
-        . . . f 1 f 1 1 1 1 1 1 f . . . 
-        . . . f 1 f 1 1 1 1 1 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 d f . . . 
-        . . . . f d 1 1 1 1 d f . . . . 
-        . . . . . f 1 1 1 1 f . . . . . 
-        . . . . . f 1 1 1 d f . . . . . 
-        . . . . . f 1 1 d d f . . . . . 
-        . . . . . f d d f d f . . . . . 
-        . . . . . f d f f f . . . . . . 
-        . . . . . f f . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . f f f f f f . . . . . 
-        . . . . f d 1 1 1 1 1 f . . . . 
-        . . . f d 1 1 1 1 1 1 1 f . . . 
-        . . . f 1 f 1 1 1 1 1 1 f . . . 
-        . . . f 1 f 1 1 1 1 1 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 d f . . . 
-        . . . . f d 1 1 1 1 d f . . . . 
-        . . . . . f 1 1 1 1 f . . . . . 
-        . . . . . f 1 1 1 d f . . . . . 
-        . . . . . f d d d d f . . . . . 
-        . . . . . . f d f d f . . . . . 
-        . . . . . . . f f d f . . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `],
-    150,
-    true
-    )
-})
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    PLAYER.setImage(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . f f f f f f . . . . . . 
-        . . . f 1 1 1 1 1 d f . . . . . 
-        . . f 1 1 1 1 1 1 1 d f . . . . 
-        . . f 1 1 1 1 1 1 f 1 f . . . . 
-        . . f 1 1 1 1 1 1 f 1 f . . . . 
-        . . f 1 1 1 1 1 1 1 1 f . . . . 
-        . . f 1 1 1 1 1 1 1 1 f . . . . 
-        . . . f d 1 1 1 1 d f . . . . . 
-        . . . . f 1 1 1 1 f . . . . . . 
-        . . . . f 1 1 1 1 f . . . . . . 
-        . . . . f d 1 1 1 f . . . . . . 
-        . . . . f d f d 1 f . . . . . . 
-        . . . . f d f f d f . . . . . . 
-        . . . . f f . . f f . . . . . . 
-        `)
-    animation.runImageAnimation(
-    PLAYER,
-    [img`
-        . . . . . f f f f f f . . . . . 
-        . . . . f 1 1 1 1 1 d f . . . . 
-        . . . f 1 1 1 1 1 1 1 d f . . . 
-        . . . f 1 1 1 1 1 1 f 1 f . . . 
-        . . . f 1 1 1 1 1 1 f 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 1 f . . . 
-        . . . f d 1 1 1 1 1 1 1 f . . . 
-        . . . . f d 1 1 1 1 d f . . . . 
-        . . . . . f 1 1 1 1 f . . . . . 
-        . . . . . f d 1 1 1 f . . . . . 
-        . . . . . f d d 1 1 f . . . . . 
-        . . . . . f d f d d f . . . . . 
-        . . . . . . f f f d f . . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . f f f f f f . . . . . 
-        . . . . f 1 1 1 1 1 d f . . . . 
-        . . . f 1 1 1 1 1 1 1 d f . . . 
-        . . . f 1 1 1 1 1 1 f 1 f . . . 
-        . . . f 1 1 1 1 1 1 f 1 f . . . 
-        . . . f 1 1 1 1 1 1 1 1 f . . . 
-        . . . f d 1 1 1 1 1 1 1 f . . . 
-        . . . . f d 1 1 1 1 d f . . . . 
-        . . . . . f 1 1 1 1 f . . . . . 
-        . . . . . f d 1 1 1 f . . . . . 
-        . . . . . f d d d d f . . . . . 
-        . . . . . f d f d f . . . . . . 
-        . . . . . f d f f . . . . . . . 
-        . . . . . f f . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `],
-    150,
-    true
-    )
-})
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    PLAYER.setImage(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . f f f f f f f . . . . 
-        . . . . f d 1 1 1 1 1 d f . . . 
-        . . . f d 1 1 1 1 1 1 1 d f . . 
-        . . . f 1 1 f 1 1 1 f 1 1 f . . 
-        . . . f 1 1 f 1 1 1 f 1 1 f . . 
-        . . . f 1 1 1 1 1 1 1 1 1 f . . 
-        . . . f 1 1 1 1 1 1 1 1 1 f . . 
-        . . . . f d 1 1 1 1 1 d f . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 d f 1 1 f . . . . 
-        . . . . . f d f . f d f . . . . 
-        . . . . . f f . . f f f . . . . 
-        `)
-    animation.runImageAnimation(
-    PLAYER,
-    [img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . f f f f f f f . . . . 
-        . . . . f d 1 1 1 1 1 d f . . . 
-        . . . f d 1 1 1 1 1 1 1 d f . . 
-        . . . f 1 1 f 1 1 1 f 1 1 f . . 
-        . . . f 1 1 f 1 1 1 f 1 1 f . . 
-        . . . f 1 1 1 1 1 1 1 1 1 f . . 
-        . . . f 1 1 1 1 1 1 1 1 1 f . . 
-        . . . . f d 1 1 1 1 1 d f . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 1 1 1 1 f . . . . 
-        . . . . . f 1 f f 1 1 f . . . . 
-        . . . . . . f . . f d f . . . . 
-        . . . . . . . . . f f f . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . f f f f f f f . . . . . 
-        . . . f d 1 1 1 1 1 d f . . . . 
-        . . f d 1 1 1 1 1 1 1 d f . . . 
-        . . f 1 1 f 1 1 1 f 1 1 f . . . 
-        . . f 1 1 f 1 1 1 f 1 1 f . . . 
-        . . f 1 1 1 1 1 1 1 1 1 f . . . 
-        . . f 1 1 1 1 1 1 1 1 1 f . . . 
-        . . . f d 1 1 1 1 1 d f . . . . 
-        . . . . f 1 1 1 1 1 f . . . . . 
-        . . . . f 1 1 1 1 1 f . . . . . 
-        . . . . f 1 1 1 1 1 f . . . . . 
-        . . . . f 1 d f 1 1 f . . . . . 
-        . . . . f d f . f f . . . . . . 
-        . . . . f f . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `],
-    150,
-    true
-    )
-})
 let PIZZA: Sprite = null
 let BASURA: Sprite = null
+let countPizzas = 0
 let PLAYER: Sprite = null
+let txtPizzas: TextSprite = null
 info.setScore(0)
+txtPizzas = textsprite.create("Pizzas: 0", 0, 2)
+txtPizzas.setPosition(40, 10)
 tiles.setCurrentTilemap(tilemap`nivel1`)
 PLAYER = sprites.create(img`
     . . . . . . . . . . . . . . . . 
