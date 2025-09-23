@@ -2,7 +2,9 @@
     "name": "TorneoV2 Ale, Logan y Emi",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "arcade-text": "github:microsoft/arcade-text#v1.3.0",
+        "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2"
     },
     "files": [
         "main.blocks",
