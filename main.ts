@@ -7,9 +7,6 @@ namespace SpriteKind {
     export const COSAS1 = SpriteKind.create()
     export const COSAS2 = SpriteKind.create()
 }
-/**
- * "typePapel" | "typeOrganico" | "typePlastico"
- */
 // anadira 1 a papel
 function inicializarTextos () {
     game.splash("RESCATEMOS EL PLANETA")
@@ -274,15 +271,29 @@ function moverTrashi () {
     characterAnimations.rule(Predicate.FacingRight)
     )
 }
+function entregarIncorrecto () {
+    if (itemLlevado) {
+        // efecto distinto para el error
+        itemLlevado.destroy(effects.ashes, 200)
+        scene.cameraShake(2, 200)
+    }
+    llevando = false
+    itemLlevado = null
+tipoLlevado = ""
+    info.changeLifeBy(-1)
+    music.wawawawaa.play()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, location) {
     if (llevando && tipoLlevado == "organico") {
         puntosOrganico += 1
         txtOrganicos.setText("ORG:" + puntosOrganico)
         entregarCorrecto("organico")
     } else if (llevando) {
-        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
-        music.wawawawaa.play()
+        entregarIncorrecto()
     }
+})
+info.onScore(15, function () {
+    game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
 })
 function recoger (other: Sprite, tipo: string) {
     if (llevando) {
@@ -297,6 +308,15 @@ function recoger (other: Sprite, tipo: string) {
     // opcional: que se vea "encima"
     itemLlevado.z = PLAYER.z - 1
 }
+info.onCountdownEnd(function () {
+    txtPapel.setPosition(140, 60)
+    txtOrganicos.setPosition(140, 70)
+    txtPlastico.setPosition(140, 50)
+    game.gameOver(false)
+})
+/**
+ * "typePapel" | "typeOrganico" | "typePlastico"
+ */
 function entregarCorrecto (tipo: string) {
     if (itemLlevado) {
         itemLlevado.destroy(effects.disintegrate, 200)
@@ -305,6 +325,7 @@ function entregarCorrecto (tipo: string) {
     llevando = false
     itemLlevado = null
 tipoLlevado = ""
+    info.changeScoreBy(1)
     music.baDing.play()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typePapel, function (p, o) {
@@ -317,9 +338,9 @@ function inicializarContadores () {
     txtPlastico.setFlag(SpriteFlag.RelativeToCamera, true)
     txtPapel = textsprite.create("PAP: 0", 8, 1)
     txtPapel.setFlag(SpriteFlag.RelativeToCamera, true)
-    txtOrganicos.setPosition(20, 8)
-    txtPlastico.setPosition(80, 8)
-    txtPapel.setPosition(140, 8)
+    txtOrganicos.setPosition(20, 110)
+    txtPlastico.setPosition(80, 110)
+    txtPapel.setPosition(140, 110)
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
     if (llevando && tipoLlevado == "papel") {
@@ -327,8 +348,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
         txtPapel.setText("PAP:" + puntosPapel)
         entregarCorrecto("papel")
     } else if (llevando) {
-        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
-        music.wawawawaa.play()
+        entregarIncorrecto()
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typeOrganico, function (p, o) {
@@ -396,8 +416,14 @@ function Crear_Basura () {
         ........................
         `, SpriteKind.typePlastico)
     varPapel.setPosition(randint(0, 260), randint(0, 260))
+    // opcional: que se vea "encima"
+    varPapel.z = PLAYER.z - 1
     varPizza.setPosition(randint(0, 260), randint(0, 260))
+    // opcional: que se vea "encima"
+    varPizza.z = PLAYER.z - 1
     varBotella.setPosition(randint(0, 260), randint(0, 260))
+    // opcional: que se vea "encima"
+    varBotella.z = PLAYER.z - 1
     animation.runImageAnimation(
     varPizza,
     [img`
@@ -534,26 +560,25 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, 
         txtPlastico.setText("PLA:" + puntosPlastico)
         entregarCorrecto("plastico")
     } else if (llevando) {
-        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
-        music.wawawawaa.play()
+        entregarIncorrecto()
     }
 })
 let varBotella: Sprite = null
 let varPizza: Sprite = null
 let varPapel: Sprite = null
 let puntosPapel = 0
-let txtPapel: TextSprite = null
 let txtPlastico: TextSprite = null
+let txtPapel: TextSprite = null
 let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
 let PLAYER: Sprite = null
 let puntosOrganico = 0
 let puntosPlastico = 0
+let PuntoBotella = 0
 let itemLlevado: Sprite = null
 puntosPlastico = 0
 puntosOrganico = 0
-let PuntoBotella = 0
 scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -802,6 +827,9 @@ scene.setBackgroundImage(img`
 inicializarTextos()
 inicializarContadores()
 tiles.setCurrentTilemap(tilemap`nivel1`)
+info.setScore(0)
+info.startCountdown(60)
+info.setLife(6)
 PLAYER = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
