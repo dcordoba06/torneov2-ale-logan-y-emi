@@ -314,9 +314,6 @@ info.onCountdownEnd(function () {
     txtPlastico.setPosition(140, 50)
     game.gameOver(false)
 })
-/**
- * "typePapel" | "typeOrganico" | "typePlastico"
- */
 function entregarCorrecto (tipo: string) {
     if (itemLlevado) {
         itemLlevado.destroy(effects.disintegrate, 200)
