@@ -293,7 +293,7 @@ function recoger (other: Sprite, tipo: string) {
     tipoLlevado = tipo
     // que siga al jugador sin colisionar
     itemLlevado.setFlag(SpriteFlag.Ghost, false)
-    itemLlevado.follow(PLAYER, 80)
+    itemLlevado.follow(PLAYER, 100)
     // opcional: que se vea "encima"
     itemLlevado.z = PLAYER.z - 1
 }
