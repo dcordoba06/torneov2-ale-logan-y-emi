@@ -20,9 +20,11 @@ function inicializarTextos () {
     game.showLongText("Las botellas son plástico por lo que van en el contenedor amarillo.", DialogLayout.Bottom)
     game.showLongText("Las hojas de papel son cartón por lo que van en el contenedor azul.", DialogLayout.Bottom)
 }
-function actualizarMarcadores () {
-    let countPizzas = 0
-    txtPizzas.setText("ORG: " + countPizzas)
+function actualizarMarcadores (tipo: string) {
+    if (tipo == "papel") {
+        puntosPapel += 1
+        txtPapel.setText("PAP:" + puntosPapel)
+    }
 }
 function moverTrashi () {
     characterAnimations.loopFrames(
@@ -291,20 +293,39 @@ function recoger (other: Sprite, tipo: string) {
     // opcional: que se vea "encima"
     itemLlevado.z = PLAYER.z - 1
 }
+function entregarCorrecto (tipo: string) {
+    if (itemLlevado) {
+        itemLlevado.destroy()
+    }
+    llevando = false
+    itemLlevado = null
+tipoLlevado = ""
+    actualizarMarcadores(tipo)
+    music.baDing.play()
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typePapel, function (p, o) {
     recoger(o, "papel")
 })
 function inicializarContadores () {
-    txtPizzas = textsprite.create("ORG: 0", 14, 1)
-    txtPizzas.setFlag(SpriteFlag.RelativeToCamera, true)
-    txtBotellas = textsprite.create("PLA: 0", 5, 8)
-    txtBotellas.setFlag(SpriteFlag.RelativeToCamera, true)
-    txtHojas = textsprite.create("PAP: 0", 8, 1)
-    txtHojas.setFlag(SpriteFlag.RelativeToCamera, true)
-    txtPizzas.setPosition(20, 8)
-    txtBotellas.setPosition(80, 8)
-    txtHojas.setPosition(140, 8)
+    txtOrganicos = textsprite.create("ORG: 0", 14, 1)
+    txtOrganicos.setFlag(SpriteFlag.RelativeToCamera, true)
+    txtPlastico = textsprite.create("PLA: 0", 5, 8)
+    txtPlastico.setFlag(SpriteFlag.RelativeToCamera, true)
+    txtPapel = textsprite.create("PAP: 0", 8, 1)
+    txtPapel.setFlag(SpriteFlag.RelativeToCamera, true)
+    txtOrganicos.setPosition(20, 8)
+    txtPlastico.setPosition(80, 8)
+    txtPapel.setPosition(140, 8)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    if (llevando && tipoLlevado == "papel") {
+        puntosPapel += 1
+        entregarCorrecto("papel")
+    } else if (llevando) {
+        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
+        music.wawawawaa.play()
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typeOrganico, function (p, o) {
     recoger(o, "pizza")
 })
@@ -505,16 +526,16 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.typePlastico, function (p, o) {
 let varBotella: Sprite = null
 let varPizza: Sprite = null
 let varPapel: Sprite = null
-let txtHojas: TextSprite = null
-let txtBotellas: TextSprite = null
+let txtPlastico: TextSprite = null
+let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
-let itemLlevado: Sprite = null
 let llevando = false
-let txtPizzas: TextSprite = null
+let txtPapel: TextSprite = null
+let puntosPapel = 0
 let PLAYER: Sprite = null
+let itemLlevado: Sprite = null
 let puntosBotella = 0
 let puntosPizza = 0
-let puntosPapel = 0
 let PuntoBotella = 0
 scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
