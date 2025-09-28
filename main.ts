@@ -1,16 +1,16 @@
 namespace SpriteKind {
     export const OBJETOS = SpriteKind.create()
-    export const Papel = SpriteKind.create()
-    export const Pizza = SpriteKind.create()
-    export const Botella = SpriteKind.create()
-    export const COSAS = SpriteKind.create()
+    export const typePapel = SpriteKind.create()
+    export const typeOrganico = SpriteKind.create()
+    export const typePlastico = SpriteKind.create()
+    export const RECICLABLES = SpriteKind.create()
     export const COSAS1 = SpriteKind.create()
     export const COSAS2 = SpriteKind.create()
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.COSAS2, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.disintegrate, 100)
-    PuntoPizza += 1
-})
+/**
+ * "typePapel" | "typeOrganico" | "typePlastico"
+ */
+// anadira 1 a papel
 function inicializarTextos () {
     game.splash("RESCATEMOS EL PLANETA")
     game.showLongText("Hola bienvenido soy Trashi, en conjunto rescatemos el planeta", DialogLayout.Bottom)
@@ -20,10 +20,6 @@ function inicializarTextos () {
     game.showLongText("Las botellas son plástico por lo que van en el contenedor amarillo.", DialogLayout.Bottom)
     game.showLongText("Las hojas de papel son cartón por lo que van en el contenedor azul.", DialogLayout.Bottom)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.COSAS1, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.disintegrate, 100)
-    PuntoPapel += 1
-})
 function actualizarMarcadores () {
     let countPizzas = 0
     txtPizzas.setText("ORG: " + countPizzas)
@@ -282,9 +278,21 @@ function moverTrashi () {
     characterAnimations.rule(Predicate.FacingRight)
     )
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.COSAS, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.disintegrate, 100)
-    PuntoBotella += 1
+function recoger (other: Sprite, tipo: string) {
+    if (llevando) {
+        return
+    }
+    llevando = true
+    itemLlevado = other
+    tipoLlevado = tipo
+    // que siga al jugador sin colisionar
+    itemLlevado.setFlag(SpriteFlag.Ghost, false)
+    itemLlevado.follow(PLAYER, 80)
+    // opcional: que se vea "encima"
+    itemLlevado.z = PLAYER.z - 1
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.typePapel, function (p, o) {
+    recoger(o, "papel")
 })
 function inicializarContadores () {
     txtPizzas = textsprite.create("ORG: 0", 14, 1)
@@ -297,17 +305,11 @@ function inicializarContadores () {
     txtBotellas.setPosition(80, 8)
     txtHojas.setPosition(140, 8)
 }
-/**
- * anadira 1 a papel
- */
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
-    if (PuntoPapel >= 1) {
-        PuntoPapel = 0
-        sprites.destroy(PLAYER)
-    }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.typeOrganico, function (p, o) {
+    recoger(o, "pizza")
 })
 function Crear_Basura () {
-    Papel1 = sprites.create(img`
+    varPapel = sprites.create(img`
         ........f...............
         .....fffdf..............
         ....fdddddf.............
@@ -325,8 +327,8 @@ function Crear_Basura () {
         ......fdddf.............
         .......fdf..............
         ........f...............
-        `, SpriteKind.COSAS)
-    PIZZA = sprites.create(img`
+        `, SpriteKind.typePapel)
+    varPizza = sprites.create(img`
         ....................
         ....................
         ..........ffff......
@@ -347,8 +349,8 @@ function Crear_Basura () {
         ....................
         ....................
         ....................
-        `, SpriteKind.COSAS1)
-    BASURA = sprites.create(img`
+        `, SpriteKind.typeOrganico)
+    varBotella = sprites.create(img`
         ........................
         ........................
         ..........fff...........
@@ -366,12 +368,12 @@ function Crear_Basura () {
         .........fffff..........
         ........................
         ........................
-        `, SpriteKind.COSAS2)
-    Papel1.setPosition(randint(0, 260), randint(0, 260))
-    PIZZA.setPosition(randint(0, 260), randint(0, 260))
-    BASURA.setPosition(randint(0, 260), randint(0, 260))
+        `, SpriteKind.typePlastico)
+    varPapel.setPosition(randint(0, 260), randint(0, 260))
+    varPizza.setPosition(randint(0, 260), randint(0, 260))
+    varBotella.setPosition(randint(0, 260), randint(0, 260))
     animation.runImageAnimation(
-    PIZZA,
+    varPizza,
     [img`
         .......................
         .......................
@@ -497,16 +499,23 @@ function Crear_Basura () {
     true
     )
 }
-let BASURA: Sprite = null
-let PIZZA: Sprite = null
-let Papel1: Sprite = null
+sprites.onOverlap(SpriteKind.Player, SpriteKind.typePlastico, function (p, o) {
+    recoger(o, "botella")
+})
+let varBotella: Sprite = null
+let varPizza: Sprite = null
+let varPapel: Sprite = null
 let txtHojas: TextSprite = null
 let txtBotellas: TextSprite = null
-let PuntoBotella = 0
+let tipoLlevado = ""
+let itemLlevado: Sprite = null
+let llevando = false
 let txtPizzas: TextSprite = null
-let PuntoPapel = 0
-let PuntoPizza = 0
 let PLAYER: Sprite = null
+let puntosBotella = 0
+let puntosPizza = 0
+let puntosPapel = 0
+let PuntoBotella = 0
 scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
