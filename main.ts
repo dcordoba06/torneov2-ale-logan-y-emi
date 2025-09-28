@@ -274,6 +274,16 @@ function moverTrashi () {
     characterAnimations.rule(Predicate.FacingRight)
     )
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, location) {
+    if (llevando && tipoLlevado == "organico") {
+        puntosOrganico += 1
+        txtOrganicos.setText("ORG:" + puntosOrganico)
+        entregarCorrecto("organico")
+    } else if (llevando) {
+        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
+        music.wawawawaa.play()
+    }
+})
 function recoger (other: Sprite, tipo: string) {
     if (llevando) {
         return
@@ -322,7 +332,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typeOrganico, function (p, o) {
-    recoger(o, "pizza")
+    recoger(o, "organico")
 })
 function Crear_Basura () {
     varPapel = sprites.create(img`
@@ -516,7 +526,17 @@ function Crear_Basura () {
     )
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typePlastico, function (p, o) {
-    recoger(o, "botella")
+    recoger(o, "plastico")
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
+    if (llevando && tipoLlevado == "plastico") {
+        puntosPlastico += 1
+        txtPlastico.setText("PLA:" + puntosPlastico)
+        entregarCorrecto("plastico")
+    } else if (llevando) {
+        // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
+        music.wawawawaa.play()
+    }
 })
 let varBotella: Sprite = null
 let varPizza: Sprite = null
@@ -528,9 +548,11 @@ let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
 let PLAYER: Sprite = null
+let puntosOrganico = 0
+let puntosPlastico = 0
 let itemLlevado: Sprite = null
-let puntosBotella = 0
-let puntosPizza = 0
+puntosPlastico = 0
+puntosOrganico = 0
 let PuntoBotella = 0
 scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
