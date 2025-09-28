@@ -20,12 +20,6 @@ function inicializarTextos () {
     game.showLongText("Las botellas son plástico por lo que van en el contenedor amarillo.", DialogLayout.Bottom)
     game.showLongText("Las hojas de papel son cartón por lo que van en el contenedor azul.", DialogLayout.Bottom)
 }
-function actualizarMarcadores (tipo: string) {
-    if (tipo == "papel") {
-        puntosPapel += 1
-        txtPapel.setText("PAP:" + puntosPapel)
-    }
-}
 function moverTrashi () {
     characterAnimations.loopFrames(
     PLAYER,
@@ -295,12 +289,12 @@ function recoger (other: Sprite, tipo: string) {
 }
 function entregarCorrecto (tipo: string) {
     if (itemLlevado) {
-        itemLlevado.destroy()
+        itemLlevado.destroy(effects.disintegrate, 200)
+        PLAYER.startEffect(effects.confetti, 500)
     }
     llevando = false
     itemLlevado = null
 tipoLlevado = ""
-    actualizarMarcadores(tipo)
     music.baDing.play()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.typePapel, function (p, o) {
@@ -320,6 +314,7 @@ function inicializarContadores () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
     if (llevando && tipoLlevado == "papel") {
         puntosPapel += 1
+        txtPapel.setText("PAP:" + puntosPapel)
         entregarCorrecto("papel")
     } else if (llevando) {
         // Intento de entregar algo que no es papel (por ahora no debería ocurrir)
@@ -526,12 +521,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.typePlastico, function (p, o) {
 let varBotella: Sprite = null
 let varPizza: Sprite = null
 let varPapel: Sprite = null
+let puntosPapel = 0
+let txtPapel: TextSprite = null
 let txtPlastico: TextSprite = null
 let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
-let txtPapel: TextSprite = null
-let puntosPapel = 0
 let PLAYER: Sprite = null
 let itemLlevado: Sprite = null
 let puntosBotella = 0
