@@ -13,13 +13,9 @@ namespace myTiles {
     //% fixedInstance jres blockIdentity=images._tile
     export const tile4 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
-    export const tile6 = image.ofBuffer(hex``);
-    //% fixedInstance jres blockIdentity=images._tile
     export const tile7 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile8 = image.ofBuffer(hex``);
-    //% fixedInstance jres blockIdentity=images._tile
-    export const tile9 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile12 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
@@ -36,6 +32,14 @@ namespace myTiles {
     export const tile11 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile17 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile6 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile18 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile19 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile9 = image.ofBuffer(hex``);
 
     helpers._registerFactory("tilemap", function(name: string) {
         switch(helpers.stringTrim(name)) {
@@ -59,7 +63,7 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tilePath6,sprites.castle.tilePath4,sprites.castle.tilePath7,sprites.castle.tilePath9,sprites.castle.tilePath8,sprites.castle.tilePath5,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileDarkGrass2,myTiles.tile3,sprites.castle.tileGrass3,myTiles.tile4,myTiles.tile6,myTiles.tile8,myTiles.tile9,myTiles.tile12,myTiles.tile16], TileScale.Sixteen);
             case "nivel1":
-            case "nivel1":return tiles.createTilemap(hex`10001000010101010101040808030101010101010101010102010408080301010101010101010101010104080803010101010101010102010101040808030101010101010101010101010408080301020101010101010102010104080803010101010201010101010101040808030101010101010101020101010408080302010101010101010101010205070706010101010101010101010101010101010102010101010d0d010d0d0d010d010d010d010d010d0e0c0c0c0e0c0c0c0e0c0c0c0c0e0c0c090b090a09090a09090b090909090909090a09090b0909090a0a090909090a09090b09090a0909090b090909090a0b090909090909090a090909090a09090909`, img`
+            case "nivel1":return tiles.createTilemap(hex`1000100001010101010104080808030101010110010101010201040808080301010101010101010101010413110f030101010101010102010101040808080301010101010101010101010408080803020101010101010102010104080808030101010201010101010101040808080301010101010101020101010412121203010101010101010101010205070707060101010101010101010101010101010102010101010d0d010d0d0d010d010d010d010d010d0e0c0c0c0e0c0c0c0e0c0c0c0c0e0c0c090b090a09090a09090b090909090909090a09090b0909090a0a090909090a09090b09090a0909090b090909090a0b090909090909090a090909090a09090909`, img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -76,7 +80,7 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tilePath6,sprites.castle.tilePath4,sprites.castle.tilePath7,sprites.castle.tilePath9,sprites.castle.tilePath8,sprites.castle.tilePath5,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileDarkGrass2,myTiles.tile3,sprites.castle.tileGrass3,myTiles.tile4], TileScale.Sixteen);
+`, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tilePath6,sprites.castle.tilePath4,sprites.castle.tilePath7,sprites.castle.tilePath9,sprites.castle.tilePath8,sprites.castle.tilePath5,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileDarkGrass2,myTiles.tile3,sprites.castle.tileGrass3,myTiles.tile4,myTiles.tile9,myTiles.tile14,myTiles.tile18,myTiles.tile16,myTiles.tile19], TileScale.Sixteen);
         }
         return null;
     })
@@ -94,14 +98,10 @@ namespace myTiles {
             case "tile3":return tile3;
             case "miMosaico2":
             case "tile4":return tile4;
-            case "myTile":
-            case "tile6":return tile6;
             case "myTile0":
             case "tile7":return tile7;
             case "myTile1":
             case "tile8":return tile8;
-            case "myTile2":
-            case "tile9":return tile9;
             case "myTile5":
             case "tile12":return tile12;
             case "myTile6":
@@ -118,6 +118,14 @@ namespace myTiles {
             case "tile11":return tile11;
             case "myTile10":
             case "tile17":return tile17;
+            case "myTile":
+            case "tile6":return tile6;
+            case "myTile11":
+            case "tile18":return tile18;
+            case "myTile12":
+            case "tile19":return tile19;
+            case "myTile2":
+            case "tile9":return tile9;
         }
         return null;
     })

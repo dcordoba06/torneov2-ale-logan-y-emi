@@ -4,7 +4,6 @@ namespace SpriteKind {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.OBJETOS, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.disintegrate, 100)
     PLAYER.startEffect(effects.confetti, 200)
-    info.changeScoreBy(1)
     countPizzas += 1
     actualizarMarcadores()
 })
@@ -276,11 +275,14 @@ function moverTrashi () {
 }
 function inicializarContadores () {
     txtPizzas = textsprite.create("ORG: 0", 14, 1)
+    txtPizzas.setFlag(SpriteFlag.RelativeToCamera, true)
     txtBotellas = textsprite.create("PLA: 0", 5, 8)
+    txtBotellas.setFlag(SpriteFlag.RelativeToCamera, true)
     txtHojas = textsprite.create("PAP: 0", 8, 1)
+    txtHojas.setFlag(SpriteFlag.RelativeToCamera, true)
     txtPizzas.setPosition(20, 8)
-    txtBotellas.setPosition(70, 8)
-    txtHojas.setPosition(120, 8)
+    txtBotellas.setPosition(80, 8)
+    txtHojas.setPosition(140, 8)
 }
 function Crear_Basura () {
     BASURA = sprites.create(img`
@@ -904,7 +906,6 @@ scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `)
 inicializarTextos()
-info.setScore(0)
 inicializarContadores()
 tiles.setCurrentTilemap(tilemap`nivel1`)
 PLAYER = sprites.create(img`
