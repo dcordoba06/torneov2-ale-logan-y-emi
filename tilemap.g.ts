@@ -97,6 +97,25 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tilePath6,sprites.castle.tilePath4,sprites.castle.tilePath7,sprites.castle.tilePath9,sprites.castle.tilePath8,sprites.castle.tilePath5,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileDarkGrass2,myTiles.tile3,sprites.castle.tileGrass3,myTiles.tile4,myTiles.tile9,myTiles.tile14,myTiles.tile18,myTiles.tile16,myTiles.tile19,myTiles.tile7,myTiles.tile6,sprites.castle.tilePath1,sprites.castle.tilePath3,sprites.castle.tilePath2,myTiles.tile20,myTiles.tile21,myTiles.tile22,myTiles.tile23,myTiles.tile24,myTiles.tile25,myTiles.tile26,myTiles.tile27], TileScale.Sixteen);
+            case "level2":
+            case "level2":return tiles.createTilemap(hex`100010000c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0408050c0c0408050c0c0c0c0c0e0e0e0b030a0c0c0b020a0c0d0d0d0d0d0c0e0709060c0c0709060c0c0c0d0c0c0d0c0c0c0c0c0c0c0c0c0e0e0c0d0c0c0d0c0c0c0c0c0c0c0c0d0c0c0c0d0c0c0e0c0c0c0c0c0c0c0c0c0c0c0c0c0d0d0d0e0c0c0c0c0c0c0c0c0c0c0c0c0c0d0e0e0c0c0c0c0c0c0c0c0d0d0c0c0c0e0c0c0d0d0c0c0c0c0c0e0c0c0c0c0d0e0c0c0c0d0c0c0c0c0c0c0c0d0c0c0c0e0c0d0d0c0c0c0c0c0c0c0e0d0d0c0408050c0c0c0c0c0c0d0c0c0c0c0d0d0b010a0c0c0c0c0c0c0c0c0c0c0c0c0c0709060c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, [myTiles.transparency16,myTiles.tile18,myTiles.tile19,myTiles.tile9,myTiles.tile20,myTiles.tile21,myTiles.tile22,myTiles.tile23,myTiles.tile24,myTiles.tile25,myTiles.tile26,myTiles.tile27,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass3], TileScale.Sixteen);
         }
         return null;
     })

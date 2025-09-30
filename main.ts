@@ -16,6 +16,7 @@ function inicializarTextos () {
     game.showLongText("Las pizzas son orgánico por lo que van en el contenedor café.", DialogLayout.Bottom)
     game.showLongText("Las botellas son plástico por lo que van en el contenedor amarillo.", DialogLayout.Bottom)
     game.showLongText("Las hojas de papel son cartón por lo que van en el contenedor azul.", DialogLayout.Bottom)
+    game.showLongText("¡Tienes que llegar a 15 puntos para avanzar!", DialogLayout.Bottom)
 }
 function moverTrashi () {
     characterAnimations.loopFrames(
@@ -292,9 +293,25 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, 
         entregarIncorrecto()
     }
 })
-info.onScore(15, function () {
-    game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
-})
+function setNivelComplejidad (pNivel: number) {
+    if (pNivel == 1) {
+        varNivel = 1
+        varTiempo = 90
+        varCantItems = 2
+        varCantVidas = 7
+        info.startCountdown(varTiempo)
+    } else {
+        if (pNivel == 2) {
+            varNivel = 2
+            varTiempo = 60
+            varCantItems = 10
+            varCantVidas = 5
+            varConteoItemsRecolectados = 0
+            info.setScore(0)
+            info.startCountdown(varTiempo)
+        }
+    }
+}
 function recoger (other: Sprite, tipo: string) {
     if (llevando) {
         return
@@ -308,12 +325,6 @@ function recoger (other: Sprite, tipo: string) {
     // opcional: que se vea "encima"
     itemLlevado.z = PLAYER.z - 1
 }
-info.onCountdownEnd(function () {
-    txtPapel.setPosition(140, 60)
-    txtOrganicos.setPosition(140, 70)
-    txtPlastico.setPosition(140, 50)
-    game.gameOver(false)
-})
 function entregarCorrecto (tipo: string) {
     if (itemLlevado) {
         itemLlevado.destroy(effects.disintegrate, 200)
@@ -322,6 +333,7 @@ function entregarCorrecto (tipo: string) {
     llevando = false
     itemLlevado = null
 tipoLlevado = ""
+    varConteoItemsRecolectados += 1
     info.changeScoreBy(1)
     music.baDing.play()
 }
@@ -564,14 +576,20 @@ let varBotella: Sprite = null
 let varPizza: Sprite = null
 let varPapel: Sprite = null
 let puntosPapel = 0
-let txtPlastico: TextSprite = null
 let txtPapel: TextSprite = null
+let txtPlastico: TextSprite = null
+let varConteoItemsRecolectados = 0
+let varCantItems = 0
+let varNivel = 0
 let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
 let PLAYER: Sprite = null
+let varCantVidas = 0
+let varTiempo = 0
 let puntosOrganico = 0
 let puntosPlastico = 0
+setNivelComplejidad(1)
 let PuntoBotella = 0
 let itemLlevado: Sprite = null
 puntosPlastico = 0
@@ -825,8 +843,8 @@ inicializarTextos()
 inicializarContadores()
 tiles.setCurrentTilemap(tilemap`nivel1`)
 info.setScore(0)
-info.startCountdown(60)
-info.setLife(6)
+info.startCountdown(varTiempo)
+info.setLife(varCantVidas)
 PLAYER = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -850,4 +868,11 @@ scene.cameraFollowSprite(PLAYER)
 moverTrashi()
 game.onUpdateInterval(4000, function () {
     Crear_Basura()
+})
+game.onUpdateInterval(500, function () {
+    if (varCantItems == varConteoItemsRecolectados) {
+        game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
+        setNivelComplejidad(2)
+        tiles.setCurrentTilemap(tilemap`level2`)
+    }
 })
