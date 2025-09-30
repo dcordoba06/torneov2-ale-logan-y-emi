@@ -892,6 +892,10 @@ game.onUpdateInterval(500, function () {
     } else {
         if (varConteoItemsRecolectados == 4 && varNivel == 2) {
             setComplejidad(3)
+        } else {
+            if (varConteoItemsRecolectados == 4 && varNivel == 3) {
+                game.gameOver(true)
+            }
         }
     }
 })
