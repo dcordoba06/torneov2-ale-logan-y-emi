@@ -16,7 +16,68 @@ function inicializarTextos () {
     game.showLongText("Las pizzas son orgánico por lo que van en el contenedor café.", DialogLayout.Bottom)
     game.showLongText("Las botellas son plástico por lo que van en el contenedor amarillo.", DialogLayout.Bottom)
     game.showLongText("Las hojas de papel son cartón por lo que van en el contenedor azul.", DialogLayout.Bottom)
-    game.showLongText("¡Tienes que llegar a 15 puntos para avanzar!", DialogLayout.Bottom)
+}
+function setDificultad (pNivel: number) {
+    sprites.destroyAllSpritesOfKind(SpriteKind.typePapel)
+    sprites.destroyAllSpritesOfKind(SpriteKind.typePlastico)
+    sprites.destroyAllSpritesOfKind(SpriteKind.typeOrganico)
+    varNivel = 1
+    varTiempo = 90
+    varCantVidas = 7
+    if (pNivel == 1) {
+        if (varDificultad == 1) {
+            varTiempo = 90
+            varCantVidas = 10
+        } else if (varDificultad == 2) {
+            varTiempo = 60
+            varCantVidas = 7
+        } else if (varDificultad == 3) {
+            varTiempo = 50
+            varCantVidas = 3
+        }
+        info.startCountdown(varTiempo)
+    } else {
+        if (pNivel == 2) {
+            game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
+            tiles.setCurrentTilemap(tilemap`level2`)
+            varNivel = 2
+            if (varDificultad == 1) {
+                varTiempo = 70
+                varCantVidas = 7
+            } else if (varDificultad == 2) {
+                varTiempo = 50
+                varCantVidas = 5
+            } else if (varDificultad == 3) {
+                varTiempo = 45
+                varCantVidas = 3
+            }
+            info.startCountdown(varTiempo)
+            varConteoItemsRecolectados = 0
+            info.setScore(0)
+            info.startCountdown(varTiempo)
+        } else {
+            if (pNivel == 3) {
+                tiles.setCurrentTilemap(tilemap`level3`)
+                game.showLongText("¡Pasaste al tercer nivel!", DialogLayout.Bottom)
+                varNivel = 3
+                varTiempo = 50
+                if (varDificultad == 1) {
+                    varTiempo = 70
+                    varCantVidas = 5
+                } else if (varDificultad == 2) {
+                    varTiempo = 60
+                    varCantVidas = 3
+                } else if (varDificultad == 3) {
+                    varTiempo = 50
+                    varCantVidas = 1
+                }
+                info.startCountdown(varTiempo)
+                varConteoItemsRecolectados = 0
+                info.setScore(0)
+                info.startCountdown(varTiempo)
+            }
+        }
+    }
 }
 function moverTrashi () {
     characterAnimations.loopFrames(
@@ -271,37 +332,6 @@ function moverTrashi () {
     150,
     characterAnimations.rule(Predicate.FacingRight)
     )
-}
-function setComplejidad (pComplejidad: number) {
-    if (pComplejidad == 1) {
-        varNivel = 1
-        varTiempo = 90
-        varCantVidas = 7
-        info.startCountdown(varTiempo)
-    } else {
-        if (pComplejidad == 2) {
-            game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
-            tiles.setCurrentTilemap(tilemap`level2`)
-            varNivel = 2
-            varTiempo = 60
-            varCantVidas = 5
-            varConteoItemsRecolectados = 0
-            info.setScore(0)
-            info.startCountdown(varTiempo)
-        } else {
-            if (pComplejidad == 3) {
-                tiles.setCurrentTilemap(tilemap`level3`)
-                game.showLongText("¡Pasaste al tercer nivel!", DialogLayout.Bottom)
-                varNivel = 3
-                varTiempo = 50
-                varCantItems = 15
-                varCantVidas = 3
-                varConteoItemsRecolectados = 0
-                info.setScore(0)
-                info.startCountdown(varTiempo)
-            }
-        }
-    }
 }
 function entregarIncorrecto () {
     if (itemLlevado) {
@@ -593,7 +623,6 @@ let txtPlastico: TextSprite = null
 let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
-let varCantItems = 0
 let varConteoItemsRecolectados = 0
 let varNivel = 0
 let PLAYER: Sprite = null
@@ -601,9 +630,12 @@ let varCantVidas = 0
 let varTiempo = 0
 let puntosOrganico = 0
 let puntosPlastico = 0
-let PuntoBotella = 0
+let varDificultad = 0
 let itemLlevado: Sprite = null
-setComplejidad(1)
+let PuntoBotella = 0
+let varCantItems = 0
+setDificultad(varDificultad)
+setDificultad(1)
 puntosPlastico = 0
 puntosOrganico = 0
 scene.setBackgroundImage(img`
@@ -852,6 +884,8 @@ scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `)
 inicializarTextos()
+varDificultad = game.askForNumber("Dificultad 1-Fácil 2-Normal 3-Difícil)", 1)
+setDificultad(1)
 inicializarContadores()
 tiles.setCurrentTilemap(tilemap`nivel1`)
 info.setScore(0)
@@ -887,13 +921,13 @@ game.onUpdateInterval(4000, function () {
 // 
 // 3 Avanzado
 game.onUpdateInterval(500, function () {
-    if (varConteoItemsRecolectados == 2 && varNivel == 1) {
-        setComplejidad(2)
+    if (varConteoItemsRecolectados == 10 && varNivel == 1) {
+        setDificultad(2)
     } else {
-        if (varConteoItemsRecolectados == 4 && varNivel == 2) {
-            setComplejidad(3)
+        if (varConteoItemsRecolectados == 12 && varNivel == 2) {
+            setDificultad(3)
         } else {
-            if (varConteoItemsRecolectados == 4 && varNivel == 3) {
+            if (varConteoItemsRecolectados == 15 && varNivel == 3) {
                 game.gameOver(true)
             }
         }
