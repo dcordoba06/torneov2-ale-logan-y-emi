@@ -272,6 +272,37 @@ function moverTrashi () {
     characterAnimations.rule(Predicate.FacingRight)
     )
 }
+function setComplejidad (pComplejidad: number) {
+    if (pComplejidad == 1) {
+        varNivel = 1
+        varTiempo = 90
+        varCantVidas = 7
+        info.startCountdown(varTiempo)
+    } else {
+        if (pComplejidad == 2) {
+            game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
+            tiles.setCurrentTilemap(tilemap`level2`)
+            varNivel = 2
+            varTiempo = 60
+            varCantVidas = 5
+            varConteoItemsRecolectados = 0
+            info.setScore(0)
+            info.startCountdown(varTiempo)
+        } else {
+            if (pComplejidad == 3) {
+                tiles.setCurrentTilemap(tilemap`level3`)
+                game.showLongText("¡Pasaste al tercer nivel!", DialogLayout.Bottom)
+                varNivel = 3
+                varTiempo = 50
+                varCantItems = 15
+                varCantVidas = 3
+                varConteoItemsRecolectados = 0
+                info.setScore(0)
+                info.startCountdown(varTiempo)
+            }
+        }
+    }
+}
 function entregarIncorrecto () {
     if (itemLlevado) {
         // efecto distinto para el error
@@ -293,25 +324,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, 
         entregarIncorrecto()
     }
 })
-function setNivelComplejidad (pNivel: number) {
-    if (pNivel == 1) {
-        varNivel = 1
-        varTiempo = 90
-        varCantItems = 2
-        varCantVidas = 7
-        info.startCountdown(varTiempo)
-    } else {
-        if (pNivel == 2) {
-            varNivel = 2
-            varTiempo = 60
-            varCantItems = 10
-            varCantVidas = 5
-            varConteoItemsRecolectados = 0
-            info.setScore(0)
-            info.startCountdown(varTiempo)
-        }
-    }
-}
 function recoger (other: Sprite, tipo: string) {
     if (llevando) {
         return
@@ -578,20 +590,20 @@ let varPapel: Sprite = null
 let puntosPapel = 0
 let txtPapel: TextSprite = null
 let txtPlastico: TextSprite = null
-let varConteoItemsRecolectados = 0
-let varCantItems = 0
-let varNivel = 0
 let txtOrganicos: TextSprite = null
 let tipoLlevado = ""
 let llevando = false
+let varCantItems = 0
+let varConteoItemsRecolectados = 0
+let varNivel = 0
 let PLAYER: Sprite = null
 let varCantVidas = 0
 let varTiempo = 0
 let puntosOrganico = 0
 let puntosPlastico = 0
-setNivelComplejidad(1)
 let PuntoBotella = 0
 let itemLlevado: Sprite = null
+setComplejidad(1)
 puntosPlastico = 0
 puntosOrganico = 0
 scene.setBackgroundImage(img`
@@ -869,10 +881,17 @@ moverTrashi()
 game.onUpdateInterval(4000, function () {
     Crear_Basura()
 })
+// 1 Basico
+// 
+// 2 Intermedio
+// 
+// 3 Avanzado
 game.onUpdateInterval(500, function () {
-    if (varCantItems == varConteoItemsRecolectados) {
-        game.showLongText("¡Pasaste al segundo nivel!", DialogLayout.Bottom)
-        setNivelComplejidad(2)
-        tiles.setCurrentTilemap(tilemap`level2`)
+    if (varConteoItemsRecolectados == 2 && varNivel == 1) {
+        setComplejidad(2)
+    } else {
+        if (varConteoItemsRecolectados == 4 && varNivel == 2) {
+            setComplejidad(3)
+        }
     }
 })
